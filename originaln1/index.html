@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise ❤️</title>
+<style>
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000}
+#birthdayFrame{display:block;width:100%;height:100%;border:0}
+#musicBtn{position:fixed;right:14px;bottom:14px;z-index:99999;width:44px;height:44px;border:0;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(6px)}
+</style>
+</head>
+<body>
+<audio id="bgMusic" preload="auto"><source id="bgSource" src="music/bg1.mp3" type="audio/mpeg"></audio>
+<iframe id="birthdayFrame" src="pages/index.html" title="Birthday Surprise"></iframe>
+<button id="musicBtn" aria-label="Music">🔊</button>
+<script>
+(() => {
+  const frame = document.getElementById("birthdayFrame");
+  const music = document.getElementById("bgMusic");
+  const musicBtn = document.getElementById("musicBtn");
+  const pages = [
+    "pages/welcome.html",
+    "pages/message.html",
+    "pages/gallery.html",
+    "pages/portrait.html",
+    "pages/page5.html",
+    "pages/page6.html"
+  ];
+  let current = 1;
+  let musicStarted = false;
+  const playlist = ["music/bg1.mp3", "music/bg.mp3"];
+  let trackIndex = 0;
+
+  function startMusic(){
+    music.volume = 0.4;
+    return music.play().then(() => {
+      musicStarted = true;
+      musicBtn.textContent = "🔊";
+    }).catch(() => {});
+  }
+
+  music.addEventListener("ended", () => {
+    trackIndex = (trackIndex + 1) % playlist.length;
+    music.src = playlist[trackIndex];
+    music.load();
+    startMusic();
+  });
+
+  function go(page, push=true){
+    page = Number(page);
+    if(!Number.isInteger(page) || page < 1 || page > 6) return;
+    current = page;
+    if(push) history.pushState({page:page}, "", "#page" + page);
+    frame.src = pages[page-1];
+  }
+
+  // Make the controller available to every page inside the iframe.
+  // Each page's own JS calls this, so there is no duplicate navigation.
+  window.BirthdayBook = { go, startMusic, get current(){ return current; } };
+
+  frame.addEventListener("load", () => {
+    // Page scripts handle their own buttons. We only expose the controller.
+    // This keeps Page 4's photo carousel working instead of skipping it.
+  });
+
+  musicBtn.addEventListener("click", () => {
+    if(music.paused){
+      startMusic();
+    } else {
+      music.pause();
+      musicBtn.textContent = "🔇";
+    }
+  });
+
+  window.addEventListener("popstate", (event) => {
+    const page = event.state && event.state.page ? event.state.page : 1;
+    go(page, false);
+  });
+
+  const hash = parseInt((location.hash || "#page1").replace("#page", ""), 10);
+  const initial = Number.isInteger(hash) && hash >= 1 && hash <= 6 ? hash : 1;
+  current = initial;
+  history.replaceState({page:initial}, "", "#page" + initial);
+  frame.src = pages[initial-1];
+})();
+</script>
+</body>
+</html>

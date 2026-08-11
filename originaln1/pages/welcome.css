@@ -1,0 +1,258 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+background:linear-gradient(-45deg,
+#280606,
+#660640,
+#211d32,
+#dc3235);
+
+background-size:400% 400%;
+animation:bgMove 10s infinite ease;
+}
+
+@keyframes bgMove{
+
+0%{background-position:0 50%;}
+
+50%{background-position:100% 50%;}
+
+100%{background-position:0 50%;}
+
+}
+
+.container{
+
+width:90%;
+max-width:700px;
+
+padding:40px;
+
+text-align:center;
+
+background:rgba(228, 219, 219, 0.15);
+
+backdrop-filter:blur(12px);
+
+border-radius:25px;
+
+color:rgb(172, 144, 144);
+
+box-shadow:0 20px 40px rgba(193, 177, 177, 0.3);
+
+animation:fade 1.5s;
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(60px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+h1{
+
+font-size:60px;
+margin:20px 0;
+}
+
+h2{
+
+font-size:30px;
+}
+
+h3{
+
+font-size:35px;
+margin-bottom:20px;
+}
+
+p{
+
+font-size:18px;
+line-height:1.7;
+margin-bottom:35px;
+}
+
+button{
+
+padding:18px 45px;
+
+font-size:20px;
+
+border:none;
+
+border-radius:40px;
+
+cursor:pointer;
+
+background:rgba(211, 130, 156,0.1);
+
+color:hsl(339, 6%, 56%);
+
+font-weight:bold;
+
+transition:.4s;
+}
+
+button:hover{
+
+transform:scale(1.08);
+
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.balloons span{
+
+position:absolute;
+
+bottom:-120px;
+
+width:60px;
+height:80px;
+
+border-radius:50%;
+
+animation:float 10s linear infinite;
+
+opacity:.8;
+}
+
+.balloons span:nth-child(1){
+left:10%;
+background:#5c2630;
+animation-duration:10s;
+}
+
+.balloons span:nth-child(2){
+left:25%;
+background:#0a07a3;
+animation-duration:8s;
+}
+
+.balloons span:nth-child(3){
+left:45%;
+background:#e60c0c;
+animation-duration:9s;
+}
+
+.balloons span:nth-child(4){
+left:65%;
+background:#10cc19;
+animation-duration:11s;
+}
+
+.balloons span:nth-child(5){
+left:80%;
+background:#00e676;
+animation-duration:7s;
+}
+
+.balloons span:nth-child(6){
+left:92%;
+background:#dfe20c;
+animation-duration:12s;
+}
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+100%{
+
+transform:translateY(-120vh);
+
+}
+
+}
+
+@media(max-width:768px){
+
+h1{
+font-size:40px;
+}
+
+h2{
+font-size:24px;
+}
+
+h3{
+font-size:26px;
+}
+
+p{
+font-size:16px;
+}
+
+button{
+
+font-size:18px;
+
+padding:15px 35px;
+
+}
+
+.container{
+
+padding:30px 20px;
+
+}
+
+}
+
+
+.floating-elements{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.floating-elements span{
+    position: absolute;
+    bottom: -80px;
+    font-size: 28px;
+    animation: floatUp linear infinite;
+    opacity: .9;
+}
+
+@keyframes floatUp{
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    100%{
+        transform: translateY(-120vh) rotate(360deg);
+        opacity:0;
+    }
+
+}
